@@ -14,5 +14,5 @@ Este projeto automatiza a integração do Ubuntu 24.04 com um domínio Samba Act
 Basta rodar o comando abaixo em uma instalação limpa do Ubuntu 24.04:
 
 ```sh
-wget -qO- https://gist.githubusercontent.com/usuario/id/raw/install.sh | sudo bash
+wget -qO- https://gist.github.com/alclogti/419da44fe5d67b91bcd628fc8b83191a | sudo bash
 ```
