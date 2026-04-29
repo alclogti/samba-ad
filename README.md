@@ -17,7 +17,12 @@ Basta rodar o comando abaixo em uma instalação limpa do Ubuntu 24.04:
 wget -O install.sh https://gist.githubusercontent.com/alclogti/419da44fe5d67b91bcd628fc8b83191a/raw/configuracao.sh && sudo bash install.sh
 ```
 
-Após conclusão do script, reinicie o Linux:
+### Nessa fase, coloque seu usuário e senha de rede
+
+<img width="1273" height="801" alt="image" src="https://github.com/user-attachments/assets/402442ca-e180-4004-9569-4e96860a1f1c" />
+
+### Após conclusão do script, reinicie o Linux:
+
 ```sh
 sudo reboot
 ```
