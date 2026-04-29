@@ -26,6 +26,6 @@ sudo reboot
 
 <img width="1286" height="806" alt="image" src="https://github.com/user-attachments/assets/2fb78843-bf9c-414a-bcdd-c0e9f1e086dd" />
 
-Informe o nome.sobrenome@rede.alclog.com.br
+### Informe o nome.sobrenome@rede.alclog.com.br
 
 <img width="1276" height="801" alt="image" src="https://github.com/user-attachments/assets/316ffa5e-8786-4e54-81e1-c5469f0e2320" />
