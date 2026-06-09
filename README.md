@@ -4,10 +4,20 @@ Este projeto automatiza a integração do Ubuntu 24.04 com um domínio Samba Act
 
 ## O que este script faz?
 - Atualiza o sistema e instala/ativa o **SSH**.
-- Configura o **Netplan** para usar o DNS do AD.
-- Instala e configura **Realmd, SSSD e Kerberos**.
-- Habilita a **criação automática da pasta Home** no primeiro login.
-- Configura um **Script de Logon Mestre** que baixa e executa atalhos `.sh` a partir do SYSVOL/NETLOGON do servidor.
+- Valida **DNS e conectividade** com o controlador de domínio (LDAP/Kerberos).
+- Configura o **Kerberos** (`/etc/krb5.conf`) de forma idempotente.
+- Ajusta o **FQDN local** em `/etc/hosts` para resolver o hostname corretamente.
+- Ingressa a máquina no domínio via **adcli** e **realmd**.
+- Configura o **Samba** como membro do domínio AD (com mapeamento RID, valid users, password server preferencial, etc.).
+- Instala um **script de logon mestre** (`/usr/local/bin/logon_linux.sh`) que:
+  - Cria um **link simbólico** na área de trabalho para o compartilhamento **Scanner**.
+  - Baixa e executa scripts `.sh` adicionais do **NETLOGON** do AD.
+- Configura **autostart** no ambiente gráfico para executar o logon automaticamente.
+- Habilita criação automática de **pasta Home** no primeiro login (mkhomedir).
+- Cria e configura uma pasta **compartilhada SMB** (`Scanner` em `/srv/samba/scanner`) com acesso para **Domain Users**.
+- Registra/atualiza o registro **DNS A** da máquina no DNS do AD via Kerberos/nsupdate.
+- Executa **validações finais** e exibe diagnósticos (realm, keytab, winbind, ACLs, etc.).
+- É **idempotente**: pode ser reexecutado várias vezes sem duplicar configurações.
 
 ## Como usar
 
