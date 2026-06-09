@@ -12,7 +12,7 @@ Este projeto automatiza a integração do Ubuntu 24.04 com um domínio Samba Act
 - Instala um **script de logon mestre** (`/usr/local/bin/logon_linux.sh`) que:
   - Cria um **link simbólico** na área de trabalho para o compartilhamento **Scanner**.
   - Baixa e executa scripts `.sh` adicionais do **NETLOGON** do AD.
-- Configura **autostart** no ambiente gráfico para executar o logon automaticamente.
+- Registra o **script de logon** no autostart do GNOME para ser executado automaticamente após o login do usuário no ambiente gráfico.
 - Habilita criação automática de **pasta Home** no primeiro login (mkhomedir).
 - Cria e configura uma pasta **compartilhada SMB** (`Scanner` em `/srv/samba/scanner`) com acesso para **Domain Users**.
 - Registra/atualiza o registro **DNS A** da máquina no DNS do AD via Kerberos/nsupdate.
