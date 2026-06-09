@@ -316,25 +316,31 @@ install_base_packages() {
 install_google_chrome() {
   log "--- Instalando Google Chrome (repositório oficial) ---"
 
-  # Certifica-se de que curl está disponível.
-  if ! command -v curl >/dev/null 2>&1; then
-    apt-get update
-    apt-get install -y curl
-  fi
+  local src="/etc/apt/sources.list.d/google-chrome.sources"
+  local legacy_list="/etc/apt/sources.list.d/google-chrome.list"
+
+  # Limpa arquivos antigos antes de qualquer apt update para evitar que uma
+  # execução anterior com source inválido quebre a instalação inteira.
+  rm -f "$src" "$legacy_list"
 
   install -dm 755 /etc/apt/keyrings
 
   local key="/etc/apt/keyrings/google-chrome.asc"
   if [ ! -f "$key" ]; then
-    curl -fsSL https://dl.google.com/linux/linux_signing_key.pub -o "$key"
+    if command -v curl >/dev/null 2>&1; then
+      curl -fsSL https://dl.google.com/linux/linux_signing_key.pub -o "$key"
+    elif command -v wget >/dev/null 2>&1; then
+      wget -qO "$key" https://dl.google.com/linux/linux_signing_key.pub
+    else
+      apt-get update
+      apt-get install -y curl
+      curl -fsSL https://dl.google.com/linux/linux_signing_key.pub -o "$key"
+    fi
+
     chmod a+r "$key"
     log "Chave GPG do Google adicionada."
   fi
 
-  local src="/etc/apt/sources.list.d/google-chrome.sources"
-  if [ -f "$src" ]; then
-    rm -f "$src"
-  fi
   cat <<EOF > "$src"
 Types: deb
 URIs: https://dl.google.com/linux/chrome/deb/

@@ -25,8 +25,10 @@ Este projeto automatiza a integração do Ubuntu 24.04 com um domínio Samba Act
 Basta rodar o comando abaixo no **Terminal** de uma instalação limpa do Ubuntu 24.04:
 
 ```sh
-wget --no-cache -O install.sh "https://raw.githubusercontent.com/alclogti/samba-ad/main/scripts/configurar-dominio.sh?nocache=$(date +%s)" && sudo bash install.sh
+wget --no-cache --header="Cache-Control: no-cache" --header="Pragma: no-cache" -O install.sh "https://raw.githubusercontent.com/alclogti/samba-ad/main/scripts/configurar-dominio.sh?ts=$(date +%s%N)" && sudo bash install.sh
 ```
+
+Se precisar validar uma correcao publicada ha poucos minutos, o jeito mais confiavel e trocar `main` por um **SHA de commit** ou **tag** especifica.
 
 ### Nessa fase, coloque seu usuário e senha de rede
 
@@ -51,11 +53,10 @@ sudo reboot
 Após o login no domínio, execute o script de instalação das impressoras corporativas:
 
 ```sh
-wget --no-cache -O instalar-impressoras.sh "https://raw.githubusercontent.com/alclogti/samba-ad/main/scripts/instalar-impressoras.sh?nocache=$(date +%s)" && sudo bash instalar-impressoras.sh
+wget --no-cache --header="Cache-Control: no-cache" --header="Pragma: no-cache" -O instalar-impressoras.sh "https://raw.githubusercontent.com/alclogti/samba-ad/main/scripts/instalar-impressoras.sh?ts=$(date +%s%N)" && sudo bash instalar-impressoras.sh
 ```
 
 O script:
 - Instala o CUPS e o driver Brother MFC-L6912DW.
 - Configura a impressora **Impressora-Estoque** (`192.168.154.109`) como padrão.
 - Ativa o compartilhamento de impressoras via CUPS.
-
