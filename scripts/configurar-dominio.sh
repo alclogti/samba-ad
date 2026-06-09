@@ -309,6 +309,54 @@ install_base_packages() {
 }
 
 # ------------------------------------------------------------------------------
+# Instala o Google Chrome via repositório oficial do Google.
+# Idempotente: não adiciona chave ou repositório se já existem.
+# Em caso de falha na instalação, o script segue (não aborta).
+# ------------------------------------------------------------------------------
+install_google_chrome() {
+  log "--- Instalando Google Chrome (repositório oficial) ---"
+
+  # Certifica-se de que curl está disponível.
+  if ! command -v curl >/dev/null 2>&1; then
+    apt-get install -y curl
+  fi
+
+  install -dm 755 /etc/apt/keyrings
+
+  local key="/etc/apt/keyrings/google-chrome.asc"
+  if [ ! -f "$key" ]; then
+    curl -fsSL https://dl.google.com/linux/linux_signing_key.pub -o "$key"
+    chmod a+r "$key"
+    log "Chave GPG do Google adicionada."
+  fi
+
+  local src="/etc/apt/sources.list.d/google-chrome.sources"
+  if [ ! -f "$src" ]; then
+    cat <<EOF > "$src"
+Types: deb
+URIs: https://dl.google.com/linux/chrome/deb/
+Suites: stable
+Components: main
+Signed-By: $key
+arch=amd64
+EOF
+    log "Repositório do Google Chrome adicionado."
+  fi
+
+  set +e
+  apt-get update
+  apt-get install -y google-chrome-stable
+  local rc=$?
+  set -e
+
+  if [ "$rc" -eq 0 ]; then
+    log "Google Chrome instalado com sucesso."
+  else
+    warn "Não foi possível instalar o Google Chrome. Script seguirá normalmente."
+  fi
+}
+
+# ------------------------------------------------------------------------------
 # Valida pré-requisitos básicos antes de tentar ingressar no domínio.
 # ------------------------------------------------------------------------------
 check_prereqs() {
@@ -803,6 +851,7 @@ validate_result() {
 # ------------------------------------------------------------------------------
 main() {
   install_base_packages
+  install_google_chrome
   configure_local_fqdn
   check_prereqs
   configure_krb5

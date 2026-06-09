@@ -4,6 +4,7 @@ Este projeto automatiza a integração do Ubuntu 24.04 com um domínio Samba Act
 
 ## O que este script faz?
 - Atualiza o sistema e instala/ativa o **SSH**.
+- Instala o **Google Chrome** via repositório oficial do Google (apt).
 - Valida **DNS e conectividade** com o controlador de domínio (LDAP/Kerberos).
 - Configura o **Kerberos** (`/etc/krb5.conf`) de forma idempotente.
 - Ajusta o **FQDN local** em `/etc/hosts` para resolver o hostname corretamente.
