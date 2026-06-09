@@ -14,7 +14,7 @@ Este projeto automatiza a integração do Ubuntu 24.04 com um domínio Samba Act
 Basta rodar o comando abaixo no **Terminal** de uma instalação limpa do Ubuntu 24.04:
 
 ```sh
-wget --no-cache -O install.sh "https://gist.githubusercontent.com/alclogti/419da44fe5d67b91bcd628fc8b83191a/raw/configuracao.sh?nocache=$(date +%s)" && sudo bash install.sh
+wget --no-cache -O install.sh "https://raw.githubusercontent.com/alclogti/samba-ad/main/scripts/configurar-dominio.sh?nocache=$(date +%s)" && sudo bash install.sh
 ```
 
 ### Nessa fase, coloque seu usuário e senha de rede
@@ -34,3 +34,17 @@ sudo reboot
 ### Informe o nome.sobrenome@rede.alclog.com.br
 
 <img width="1276" height="801" alt="image" src="https://github.com/user-attachments/assets/316ffa5e-8786-4e54-81e1-c5469f0e2320" />
+
+## Instalar Impressoras
+
+Após o login no domínio, execute o script de instalação das impressoras corporativas:
+
+```sh
+wget --no-cache -O instalar-impressoras.sh "https://raw.githubusercontent.com/alclogti/samba-ad/main/scripts/instalar-impressoras.sh?nocache=$(date +%s)" && sudo bash instalar-impressoras.sh
+```
+
+O script:
+- Instala o CUPS e o driver Brother MFC-L6912DW.
+- Configura a impressora **Impressora-Estoque** (`192.168.154.109`) como padrão.
+- Ativa o compartilhamento de impressoras via CUPS.
+
