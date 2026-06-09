@@ -338,7 +338,7 @@ URIs: https://dl.google.com/linux/chrome/deb/
 Suites: stable
 Components: main
 Signed-By: $key
-arch=amd64
+Architectures: amd64
 EOF
     log "Repositório do Google Chrome adicionado."
   fi
