@@ -318,6 +318,7 @@ install_google_chrome() {
 
   # Certifica-se de que curl está disponível.
   if ! command -v curl >/dev/null 2>&1; then
+    apt-get update
     apt-get install -y curl
   fi
 
@@ -331,8 +332,10 @@ install_google_chrome() {
   fi
 
   local src="/etc/apt/sources.list.d/google-chrome.sources"
-  if [ ! -f "$src" ]; then
-    cat <<EOF > "$src"
+  if [ -f "$src" ]; then
+    rm -f "$src"
+  fi
+  cat <<EOF > "$src"
 Types: deb
 URIs: https://dl.google.com/linux/chrome/deb/
 Suites: stable
@@ -340,8 +343,7 @@ Components: main
 Signed-By: $key
 Architectures: amd64
 EOF
-    log "Repositório do Google Chrome adicionado."
-  fi
+  log "Repositório do Google Chrome adicionado."
 
   set +e
   apt-get update
@@ -850,8 +852,8 @@ validate_result() {
 # Fluxo principal
 # ------------------------------------------------------------------------------
 main() {
-  install_base_packages
   install_google_chrome
+  install_base_packages
   configure_local_fqdn
   check_prereqs
   configure_krb5
